@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="prova.sql" id="Project-1bfa" database="Sqlite" >
+	<schema name="public" >
+		<table name="disciplinas" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTOINCREMENT]]></identity>
+			</column>
+			<column name="nome" type="VARCHAR" length="30" jt="12" mandatory="y" />
+			<column name="professor_id" type="CHAR" length="30" jt="1" />
+			<index name="pk_disciplinas" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="FK_disciplinas professores" to_schema="public" to_table="professores" options="" >
+				<fk_column name="professor_id" pk="id" />
+			</fk>
+		</table>
+		<table name="dtentregas" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTOINCREMENT]]></identity>
+			</column>
+			<column name="dt" type="VARCHAR" length="30" jt="12" mandatory="y" />
+			<index name="pk_dtentregas" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="dtretiradas" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTOINCREMENT]]></identity>
+			</column>
+			<column name="dt" type="VARCHAR" length="30" jt="12" mandatory="y" />
+			<index name="pk_dtretiradas" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="professores" spec="" >
+			<column name="id" type="CHAR" length="30" jt="1" mandatory="y" />
+			<column name="nome" type="VARCHAR" length="30" jt="12" mandatory="y" />
+			<index name="pk_professores" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="provas" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTOINCREMENT]]></identity>
+			</column>
+			<column name="curso" type="VARCHAR" length="30" jt="12" mandatory="y" />
+			<column name="disciplina_id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="professor_id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="tipoavaliacao_id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="semestre_id" type="INTEGER" jt="4" />
+			<column name="dtentrega_id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="dtretirada_id" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_provas" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="FK_provas dtentregas" to_schema="public" to_table="dtentregas" options="" >
+				<fk_column name="dtentrega_id" pk="id" />
+			</fk>
+			<fk name="FK_provas dtretiradas" to_schema="public" to_table="dtretiradas" options="" >
+				<fk_column name="dtretirada_id" pk="id" />
+			</fk>
+			<fk name="FK_provas disciplinas" to_schema="public" to_table="disciplinas" options="" >
+				<fk_column name="disciplina_id" pk="id" />
+			</fk>
+			<fk name="fk_provas" to_schema="public" to_table="tipoavaliacoes" >
+				<fk_column name="tipoavaliacao_id" pk="tipoavaliacao_id" />
+			</fk>
+		</table>
+		<table name="provas_disciplinas" spec="" >
+			<column name="prova_id" type="INTEGER" jt="4" />
+			<column name="disciplina_id" type="INTEGER" jt="4" />
+			<index name="pk_provas_disciplinas" unique="UNIQUE_KEY" options="FOREIGN KEY(prova_id) REFERENCES provas(id)" >
+				<column name="prova_id" />
+				<column name="disciplina_id" />
+			</index>
+			<fk name="FK_provas_disciplinas disciplinas" to_schema="public" to_table="disciplinas" options="" >
+				<fk_column name="disciplina_id" pk="id" />
+			</fk>
+		</table>
+		<table name="tipoavaliacoes" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTOINCREMENT]]></identity>
+			</column>
+			<column name="tipo" type="VARCHAR" length="30" jt="12" mandatory="y" />
+			<column name="tipoavaliacao_id" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_tipoavaliacoes" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_tipoavaliacoes_tipoavaliacao_id" unique="UNIQUE_KEY" >
+				<column name="tipoavaliacao_id" />
+			</index>
+		</table>
+	</schema>
+	<layout name="Layout" id="Layout-1e7d" show_relation="columns" >
+		<entity schema="public" name="disciplinas" color="C7F4BE" x="48" y="176" />
+		<entity schema="public" name="dtentregas" color="BED3F4" x="688" y="48" />
+		<entity schema="public" name="dtretiradas" color="BED3F4" x="688" y="432" />
+		<entity schema="public" name="professores" color="C7F4BE" x="256" y="176" />
+		<entity schema="public" name="provas" color="BED3F4" x="448" y="176" />
+		<entity schema="public" name="provas_disciplinas" color="C7F4BE" x="256" y="368" />
+		<entity schema="public" name="tipoavaliacoes" color="3986C1" x="688" y="272" />
+	</layout>
+</project>
